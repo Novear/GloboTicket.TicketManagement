@@ -21,7 +21,7 @@ namespace GloboTicket.TicketManagement.Application.Features.Events.Commands.Crea
                 .NotEmpty().WithMessage("{Property Name} is required.")
                 .NotNull()
                 .GreaterThan(DateTime.Now);
-            // Novear
+    
             RuleFor(p => p.Price)
                 .NotEmpty().WithMessage("{Property Name} is required.")
                 .GreaterThan(0);
