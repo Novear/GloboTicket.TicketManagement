@@ -11,7 +11,7 @@ using System.Threading.Tasks;
 
 namespace GloboTicket.TicketManagement.Application.Features.Events.Commands.DeleteEvent
 {
-    internal class DeleteEventCommandHandler : IRequestHandler<DeleteEventCommand>
+    public class DeleteEventCommandHandler : IRequestHandler<DeleteEventCommand>
     {
         private readonly IAsyncRepository<Event> _eventRepository;
         private readonly IMapper _mapper;
