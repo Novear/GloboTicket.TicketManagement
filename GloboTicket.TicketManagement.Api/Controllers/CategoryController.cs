@@ -38,6 +38,9 @@ namespace GloboTicket.TicketManagement.Api.Controllers
         }
 
         [HttpPost(Name = "AddCategory")]
+        // resposne based approach ==> CreateCategoryCommandResponse
+        // it always contains information about whether or not the API call succeeded
+        // as well as possible validation errors or the newly created or updated entity 
         public async Task<ActionResult<CreateCategoryCommandResponse>> Create([FromBody] CreateCategoryCommand createCategoryCommand) 
         {
             var reponse = await _mediator.Send(createCategoryCommand);
