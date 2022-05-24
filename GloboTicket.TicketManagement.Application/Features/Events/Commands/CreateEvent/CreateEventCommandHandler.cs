@@ -4,6 +4,7 @@ using GloboTicket.TicketManagement.Application.Contracts.Persistence;
 using GloboTicket.TicketManagement.Application.Models.Mail;
 using GloboTicket.TicketManagement.Domain.Entities;
 using MediatR;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -18,12 +19,14 @@ namespace GloboTicket.TicketManagement.Application.Features.Events.Commands.Crea
         private readonly IAsyncRepository<Event> _eventRepository;
         private readonly IMapper _mapper;
         private readonly IEmailService _emailService;
+        private readonly ILogger _logger;
 
-        public CreateEventCommandHandler(IAsyncRepository<Event> eventRepository, IMapper mapper, IEmailService emailService)
+        public CreateEventCommandHandler(IAsyncRepository<Event> eventRepository, IMapper mapper, IEmailService emailService, ILogger logger)
         {
             _eventRepository = eventRepository;
             _mapper = mapper;
             _emailService = emailService;
+            _logger = logger;
         }
 
         public async Task<Guid> Handle(CreateEventCommand request, CancellationToken cancellationToken)
@@ -47,7 +50,7 @@ namespace GloboTicket.TicketManagement.Application.Features.Events.Commands.Crea
             }
             catch (Exception ex)
             {
-                throw;
+                _logger.LogError($"Mail about event {@event.EventId} failed due to an error with the mail service: {ex.Message}");
             }
 
             return @event.EventId;

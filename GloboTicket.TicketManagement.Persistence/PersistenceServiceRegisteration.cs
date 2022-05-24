@@ -19,7 +19,7 @@ namespace GloboTicket.TicketManagement.Persistence
             options.UseSqlServer(configuration.GetConnectionString("GloboTicketManagementConnectionString")));
 
             // Scoped means one instance is made per request
-            services.AddScoped(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
+            services.AddTransient(typeof(IAsyncRepository<>), typeof(BaseRepository<>));
 
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IEventRepository, EventRepository>();

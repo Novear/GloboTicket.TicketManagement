@@ -7,6 +7,9 @@ using System.Threading.Tasks;
 
 namespace GloboTicket.TicketManagement.Application.Exceptions
 {
+    // it is gonna be used to return to the client 
+    // validation errors that have been thrown by fluent validation 
+    // 
     public class ValidationException : ApplicationException
     {
         public List<string> ValidationErrors { get; set; }

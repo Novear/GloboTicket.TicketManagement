@@ -6,7 +6,9 @@ using System.Threading.Tasks;
 
 namespace GloboTicket.TicketManagement.Application.Exceptions
 {
-    public class NotFoundException:ApplicationException
+    // it will be used if someone wants to update
+    // for example an event that does not exist 
+    public class NotFoundException : ApplicationException
     {
         public NotFoundException(string name, object key)
             : base($"{name} ({key}) is not found")

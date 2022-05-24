@@ -1,12 +1,16 @@
 using AutoMapper;
+using GloboTicket.TicketManagement.Api.Middleware;
 using GloboTicket.TicketManagement.Api.Services;
 using GloboTicket.TicketManagement.Api.Utility;
 using GloboTicket.TicketManagement.Application;
 using GloboTicket.TicketManagement.Application.Contracts;
+using GloboTicket.TicketManagement.Application.Contracts.Persistence;
+using GloboTicket.TicketManagement.Application.Profiles;
 using GloboTicket.TicketManagement.Infrastructure.Configurations;
 using GloboTicket.TicketManagement.Persistence;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
@@ -33,11 +37,15 @@ namespace GloboTicket.TicketManagement.Api
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            
+
             AddSwagger(services);
             services.AddApplicationServices();
             services.AddInfrastructureServices(Configuration);
             services.AddPersistenceServices(Configuration);
+            
             services.AddScoped<ILoggedInUserService, LoggedInUserService>();
+            services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddControllers();
           
             services.AddCors(options =>
@@ -72,6 +80,7 @@ namespace GloboTicket.TicketManagement.Api
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "GloboTicket.TicketManagement.Api v1"));
             }
+            app.UseCustomExceptionHandler();
 
             app.UseHttpsRedirection();
 
